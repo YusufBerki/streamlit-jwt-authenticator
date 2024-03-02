@@ -13,12 +13,14 @@ class Authenticator:
                  method: str = "post",
                  headers: dict = None,
                  response_handler=None,
+                 token_key: str = "access",
                  cookie_lifetime: timedelta = timedelta(minutes=15)
                  ):
         self.url = url
         self.method = method
         self.headers = headers
         self.response_handler = response_handler
+        self.token_key = token_key
         self.cookie_lifetime = cookie_lifetime
 
         self.cookie_manager = stx.CookieManager()
@@ -29,7 +31,9 @@ class Authenticator:
         pass
 
     def _check_cookie(self):
-        pass
+        authentication_status = bool(self.cookie_manager.get(self.token_key))
+        st.session_state['authentication_status'] = authentication_status
+        return authentication_status
 
     def _cache_response(self, response):
         for k, v in response.items():
