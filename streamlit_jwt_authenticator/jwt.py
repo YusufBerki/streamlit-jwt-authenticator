@@ -1,4 +1,5 @@
 from datetime import timedelta, datetime
+from typing import Optional
 
 import extra_streamlit_components as stx
 import requests
@@ -64,6 +65,14 @@ class Authenticator:
         st.session_state['authentication_status'] = True
         return True
 
+    def _implement_logout(self):
+        self.cookie_manager.delete(self.token_key)
+        for k in self.cookie_keys:
+            self.cookie_manager.delete(k)
+
+        st.session_state['username'] = None
+        st.session_state['authentication_status'] = None
+
     def login(self, location: str = 'main'):
         if not st.session_state['authentication_status']:
             self._check_cookie()
@@ -81,3 +90,11 @@ class Authenticator:
 
                 if login_form.form_submit_button("Login"):
                     self._check_credentials(username, password)
+
+    def logout(self, location: str = 'main', button_name: str = 'Logout', key: Optional[str] = None):
+        if location == 'main':
+            if st.button(button_name, key):
+                self._implement_logout()
+        elif location == 'sidebar':
+            if st.sidebar.button(button_name, key):
+                self._implement_logout()
