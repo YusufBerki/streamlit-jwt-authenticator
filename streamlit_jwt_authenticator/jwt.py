@@ -1,3 +1,7 @@
+"""
+This module provides an authentication class, Authenticator, for handling JWT-based
+authentication in Streamlit applications using API calls.
+"""
 from datetime import timedelta, datetime
 from typing import Optional
 
@@ -5,7 +9,7 @@ import extra_streamlit_components as stx
 import requests
 import streamlit as st
 
-from streamlit_jwt_authenticator.utils import setup_session_keys
+from .utils import setup_session_keys
 
 
 class Authenticator:
@@ -14,11 +18,14 @@ class Authenticator:
 
         Parameters:
         - url (str): The authentication endpoint URL.
-        - method (str, optional): The HTTP method for authentication requests. Defaults to "post".
+        - method (str, optional): The HTTP method for authentication requests.
+            Defaults to "post".
         - headers (dict, optional): Additional headers to include in authentication requests.
         - response_handler (callable, optional): A function to process the authentication response.
-        - token_key (str, optional): The key to identify the authentication token in the response. Defaults to "access".
-        - cookie_lifetime (timedelta, optional): The lifetime of the authentication cookie. Defaults to timedelta(minutes=15).
+        - token_key (str, optional): The key to identify the authentication token in the response.
+            Defaults to "access".
+        - cookie_lifetime (timedelta, optional): The lifetime of the authentication cookie.
+            Defaults to timedelta(minutes=15).
     """
 
     def __init__(self,
@@ -32,7 +39,7 @@ class Authenticator:
         """
         Initializes the Authenticator instance with the specified parameters.
         """
-        self.url = url
+        self.configuration = url
         self.method = method
         self.headers = headers
         self.response_handler = response_handler
@@ -50,7 +57,6 @@ class Authenticator:
         Parameters:
         - message (str): The error message to log.
         """
-        pass
 
     def _check_cookie(self):
         """
@@ -93,7 +99,8 @@ class Authenticator:
             method=self.method,
             url=self.url,
             headers=self.headers,
-            data={"username": username, "password": password}
+            data={"username": username, "password": password},
+            timeout=5
         )
         if not response.ok:
             self._set_error(f"Response: {response.status_code}. Detail {response.text}")
@@ -124,7 +131,8 @@ class Authenticator:
         Method to display a login form and handle authentication.
 
         Parameters:
-        - location (str, optional): Location to display the login form, either 'main' or 'sidebar'. Defaults to 'main'.
+        - location (str, optional): Location to display the login form, either 'main' or 'sidebar'.
+            Defaults to 'main'.
 
         Usage:
         ```
@@ -141,7 +149,7 @@ class Authenticator:
                 elif location == 'sidebar':
                     login_form = st.sidebar.form('JWTLogin')
                 else:
-                    return self._set_error('Invalid location! Available locations: ["main", "sidebar"].')
+                    self._set_error('Invalid location! Available locations: ["main", "sidebar"].')
 
                 username = login_form.text_input("Username")
                 password = login_form.text_input('Password', type='password')
@@ -150,14 +158,22 @@ class Authenticator:
                 if login_form.form_submit_button("Login"):
                     self._check_credentials(username, password)
 
-    def logout(self, location: str = 'main', button_name: str = 'Logout', key: Optional[str] = None):
+    def logout(
+            self,
+            location: str = 'main',
+            button_name: str = 'Logout',
+            key: Optional[str] = None
+    ):
         """
         Method to handle user logout form.
 
         Parameters:
-        - location (str, optional): Location to display the logout button, either 'main' or 'sidebar'. Defaults to 'main'.
-        - button_name (str, optional): The label for the logout button. Defaults to 'Logout'.
-        - key (str, optional): A key to associate with the logout button for Streamlit. Defaults to None.
+        - location (str, optional): Location to display the logout button,
+            either 'main' or 'sidebar'. Defaults to 'main'.
+        - button_name (str, optional): The label for the logout button.
+            Defaults to 'Logout'.
+        - key (str, optional): A key to associate with the logout button for Streamlit.
+            Defaults to None.
 
         Usage:
         ```
