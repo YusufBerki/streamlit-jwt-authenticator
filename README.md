@@ -1,7 +1,7 @@
 # Streamlit JWT Authenticator
 An authentication module to add JWT authentication via API for Streamlit applications
 
-![PyPI - Version](https://img.shields.io/pypi/v/streamlit-jwt-authenticator)
+<a href="https://pypi.org/project/streamlit-jwt-authenticator/"><img src="https://img.shields.io/pypi/v/streamlit-jwt-authenticator"></a>
 <a href="https://github.com/YusufBerki/streamlit-jwt-authenticator/blob/master/LICENSE"><img src="https://img.shields.io/github/license/YusufBerki/streamlit-jwt-authenticator"></a>
 
 > [!WARNING]  
