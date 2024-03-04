@@ -62,6 +62,22 @@ This code should show you a login screen like below:
 
 ![img.png](assets/login_card.png)
 
+### 3. Use Token
+When successfully logged in, the application saves all the keys in the response to the session. For example, if you have a key named `access` in the response of the login API, you can access it as follows:
+```python
+st.session_state["access"]
+```
+
+The application can use this token when making requests to other APIs.
+
+```python
+headers = {
+    "Authorization":"Bearer {}".format(st.session_state["access"])
+}
+
+response = requests.post("http://localhost/your_api/", headers=headers)
+
+```
 ## Configuration
 
 ### Authenticator()
