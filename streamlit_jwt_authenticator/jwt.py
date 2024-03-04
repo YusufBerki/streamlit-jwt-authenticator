@@ -39,7 +39,7 @@ class Authenticator:
         """
         Initializes the Authenticator instance with the specified parameters.
         """
-        self.configuration = url
+        self.url = url
         self.method = method
         self.headers = headers
         self.response_handler = response_handler
