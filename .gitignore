@@ -2,3 +2,7 @@
 venv/
 
 __pycache__/
+.pypirc
+dist/
+build/
+*.egg-info

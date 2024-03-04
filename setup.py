@@ -1,0 +1,35 @@
+from distutils.core import setup
+
+setup(
+    name='streamlit-jwt-authenticator',
+    packages=['streamlit_jwt_authenticator'],
+    version='0.0.1',
+    license='Apache-2.0',
+    description='An authentication module to add JWT authentication via API for Streamlit applications',
+    author='Yusuf Berki YAZICIOĞLU',
+    author_email='mail@yusufberki.net',
+    url='https://github.com/YusufBerki/streamlit-jwt-authenticator',
+    keywords=['streamlit', 'jwt', 'authentication'],
+    install_requires=[
+        'streamlit',
+        'extra-streamlit-components',
+    ],
+    classifiers=[
+        'Development Status :: 3 - Alpha',
+        'Environment :: Console',
+        'Environment :: Web Environment',
+        'Intended Audience :: Developers',
+        'Intended Audience :: Science/Research',
+        'Topic :: Database :: Front-Ends',
+        'Topic :: Scientific/Engineering :: Information Analysis',
+        'Topic :: Scientific/Engineering :: Visualization',
+        'Topic :: Software Development :: Libraries :: Application Frameworks',
+        'Topic :: Software Development :: Widget Sets',
+        'License :: OSI Approved :: Apache license 2.0',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: 3.12',
+    ],
+)
